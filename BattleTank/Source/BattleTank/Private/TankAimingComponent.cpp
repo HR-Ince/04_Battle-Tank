@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAimingComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "TankBarrel.h"
 
 
@@ -26,19 +27,24 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
     FVector OutLaunchVelocity;
     FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
     
-    if(UGameplayStatics::SuggestProjectileVelocity(
-                              this,
-                              OutLaunchVelocity,
-                              StartLocation,
-                              HitLocation,
-                              LaunchSpeed,
-                              ESuggestProjVelocityTraceOption::DoNotTrace)
-       )
+    bool bAimingSolutionFound = UGameplayStatics::SuggestProjectileVelocity(
+                                                                            this,
+                                                                            OutLaunchVelocity,
+                                                                            StartLocation,
+                                                                            HitLocation,
+                                                                            LaunchSpeed,
+                                                                            false,
+                                                                            0,
+                                                                            0,
+                                                                            ESuggestProjVelocityTraceOption::DoNotTrace
+                                                                            );
+    
+    if(bAimingSolutionFound)
     {
         auto AimDirection = OutLaunchVelocity.GetSafeNormal();
         MoveBarrelTowards(AimDirection);
     }
-        
+
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
@@ -47,5 +53,5 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
     auto AimAsRotator = AimDirection.Rotation();
     auto DeltaRotator = AimAsRotator - BarrelRotator;
     
-    Barrel->Elevate(5);
+    Barrel->Elevate(DeltaRotator.Pitch);
 }
