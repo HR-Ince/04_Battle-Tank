@@ -13,8 +13,6 @@ void UTankBarrel::Elevate(float RelativeSpeed)
                                  MaxElevationDegrees);
     
     SetRelativeRotation(FRotator(0, 0, Elevation));
-    auto Time = GetWorld()->GetTimeSeconds();
-    UE_LOG(LogTemp, Error, TEXT("%f: %f + %f = %f"), Time, RelativeRotation.Roll, ElevationByFrame, NewElevation)
     }
 
 

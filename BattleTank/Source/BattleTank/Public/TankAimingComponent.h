@@ -7,6 +7,7 @@
 #include "TankAimingComponent.generated.h"
 
 class UTankBarrel;
+class UTankTurret;
 
 
 // Holds barrel's properties
@@ -22,9 +23,11 @@ public:
 public:	
 	void AimAt(FVector HitLocation, float LaunchSpeed);
     void SetBarrelReference(UTankBarrel* BarrelToSet);
+    void SetTurretReference(UTankTurret* TurretToSet);
     void MoveBarrelTowards(FVector AimDirection);
 
 private:
     UTankBarrel* Barrel = nullptr;
+    UTankTurret* Turret = nullptr;
 	
 };

@@ -7,6 +7,7 @@
 #include "Tank.generated.h"
 
 class UTankBarrel;
+class UTankTurret;
 class UTankAimingComponent;
 
 UCLASS()
@@ -27,7 +28,7 @@ public:
     void AimAt(FVector HitLocation);
     
     UFUNCTION(BlueprintCallable, Category = Setup)
-    void SetBarrelReference(UTankBarrel* BarrelToSet);
+    void SetReferences(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
     
 private:
 	// Called to bind functionality to input
