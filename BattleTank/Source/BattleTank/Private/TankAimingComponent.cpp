@@ -62,7 +62,5 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
     auto DeltaRotator = AimAsRotator - BarrelRotator;
     
     Barrel->Elevate(DeltaRotator.Pitch);
-    auto Time = GetWorld()->GetTimeSeconds();
-    UE_LOG(LogTemp, Error, TEXT("%f: Yaw = %f"), Time, AimAsRotator.Yaw)
     Turret->Rotate(DeltaRotator.Yaw);
 }
