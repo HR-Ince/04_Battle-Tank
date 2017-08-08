@@ -44,12 +44,9 @@ void ATank::AimAt(FVector HitLocation)
 
 void ATank::Fire()
 {
-    UE_LOG(LogTemp, Error, TEXT("Firing!"));
-    
     if(!Barrel) { return; }
     
+    auto Projectile = GetWorld()->SpawnActor<AProjectile>(Projectile_BP, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
     
-    FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
-    FRotator StartRotation = Barrel->GetSocketRotation(FName("Projectile"));
-    GetWorld()->SpawnActor<AProjectile>(Projectile_BP, StartLocation, StartRotation);
+    Projectile->LaunchProjectile(LaunchSpeed);
 }
