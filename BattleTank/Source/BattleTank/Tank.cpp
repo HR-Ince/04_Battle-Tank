@@ -46,7 +46,13 @@ void ATank::Fire()
 {
     if(!Barrel) { return; }
     
-    auto Projectile = GetWorld()->SpawnActor<AProjectile>(Projectile_BP, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
+    bool IsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
     
-    Projectile->LaunchProjectile(LaunchSpeed);
+    if(IsReloaded)
+    {
+        auto Projectile = GetWorld()->SpawnActor<AProjectile>(Projectile_BP, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
+        
+        Projectile->LaunchProjectile(LaunchSpeed);
+        LastFireTime = FPlatformTime::Seconds();
+    }
 }
