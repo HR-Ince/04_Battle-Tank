@@ -46,7 +46,7 @@ void ATank::Fire()
 {
     if(!Barrel) { return; }
     
-    bool IsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+    IsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
     
     if(IsReloaded)
     {

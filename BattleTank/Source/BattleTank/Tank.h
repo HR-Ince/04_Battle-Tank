@@ -32,6 +32,9 @@ public:
     UFUNCTION(BlueprintCallable, Category = Action)
     void Fire();
     
+    UPROPERTY(BlueprintReadOnly)
+    bool IsReloaded = true;
+    
     void AimAt(FVector HitLocation);
     
 private:
