@@ -14,10 +14,15 @@ void ATankAIController::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
     
-    if(Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn()))
+    auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+    auto ThisTank = Cast<ATank>(GetPawn());
+    
+    if(PlayerTank)
     {
-        Cast<ATank>(GetPawn())->AimAt((GetWorld()->GetFirstPlayerController()->GetPawn())->GetActorLocation());
+        MoveToActor(PlayerTank, AcceptanceRadius);
         
-        //Cast<ATank>(GetPawn())->Fire();
+        ThisTank->AimAt(PlayerTank->GetActorLocation());
+        
+        //ThisTank->Fire();
     }
 }
