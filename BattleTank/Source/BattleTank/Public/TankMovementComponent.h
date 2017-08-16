@@ -17,6 +17,8 @@ class BATTLETANK_API UTankMovementComponent : public UNavMovementComponent
 	GENERATED_BODY()
 	
 private:
+    virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
+    
     UTankTrack* RightTrack = nullptr;
     UTankTrack* LeftTrack = nullptr;
     
@@ -27,8 +29,6 @@ public:
     void IntendTurnRight(float Throw);
     UFUNCTION(BlueprintCallable)
     void Initialise(UTankTrack* LeftTracktoSet, UTankTrack* RightTracktoSet);
-    
-    virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 	
 	
 };
