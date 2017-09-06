@@ -31,16 +31,16 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
     FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
     
     bool bAimingSolutionFound = UGameplayStatics::SuggestProjectileVelocity(
-                                                                            this,
-                                                                            OutLaunchVelocity,
-                                                                            StartLocation,
-                                                                            HitLocation,
-                                                                            LaunchSpeed,
-                                                                            false,
-                                                                            0,
-                                                                            0,
-                                                                            ESuggestProjVelocityTraceOption::DoNotTrace
-                                                                            );
+                                                    this,
+                                                    OutLaunchVelocity,
+                                                    StartLocation,
+                                                    HitLocation,
+                                                    LaunchSpeed,
+                                                    false,
+                                                    0,
+                                                    0,
+                                                    ESuggestProjVelocityTraceOption::DoNotTrace
+                                                    );
     
     if(bAimingSolutionFound)
     {
@@ -64,13 +64,17 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 void UTankAimingComponent::Fire()
 {
-    if(!ensure(Barrel)) { return; }
+    if(!ensure(Barrel && ProjectileBP)) { return; }
     
     IsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
     
     if(IsReloaded)
     {
-        auto Projectile = GetWorld()->SpawnActor<AProjectile>(Projectile_BP, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
+        auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+                                              ProjectileBP,
+                                              Barrel->GetSocketLocation(FName("Projectile")),
+                                              Barrel->GetSocketRotation(FName("Projectile"))
+                                              );
         
         Projectile->LaunchProjectile(LaunchSpeed);
         LastFireTime = FPlatformTime::Seconds();

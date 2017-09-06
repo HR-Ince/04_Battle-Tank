@@ -25,35 +25,36 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
-	void AimAt(FVector HitLocation);
+protected:
+    UPROPERTY(BlueprintReadOnly, Category = "State")
+    EFiringState FiringState = EFiringState::Locked;
+
+private:
+    // Sets default values for this component's properties
+    UTankAimingComponent();
+    
     void MoveBarrelTowards(FVector AimDirection);
     
-    UFUNCTION(BlueprintCallable, Category = Action)
+    UTankBarrel* Barrel = nullptr;
+    UTankTurret* Turret = nullptr;
+    
+    double LastFireTime = 0;
+    
+    UPROPERTY(EditAnywhere, Category = "Firing")
+    float LaunchSpeed = 100000;
+    UPROPERTY(EditDefaultsOnly, Category = "Firing")
+    TSubclassOf<AProjectile> ProjectileBP;
+    UPROPERTY(EditDefaultsOnly, Category = "Firing")
+    float ReloadTimeInSeconds = 3;
+    
+public:
+    void AimAt(FVector HitLocation);
+    
+    UFUNCTION(BlueprintCallable, Category = "Action")
     void Fire();
     UFUNCTION(BlueprintCallable, Category = "Setup")
     void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
     
     UPROPERTY(BlueprintReadOnly)
     bool IsReloaded = true;
-
-private:
-    // Sets default values for this component's properties
-    UTankAimingComponent();
-    UTankBarrel* Barrel = nullptr;
-    UTankTurret* Turret = nullptr;
-    
-    double LastFireTime = 0;
-    
-    UPROPERTY(EditAnywhere, Category = Firing)
-    float LaunchSpeed = 100000;
-    UPROPERTY(EditDefaultsOnly, Category = Firing)
-    TSubclassOf<AProjectile> Projectile_BP;
-    UPROPERTY(EditDefaultsOnly, Category = Firing)
-    float ReloadTimeInSeconds = 3;
-
-protected:
-    UPROPERTY(BlueprintReadOnly, Category = "State")
-    EFiringState FiringState = EFiringState::Locked;
-	
 };
