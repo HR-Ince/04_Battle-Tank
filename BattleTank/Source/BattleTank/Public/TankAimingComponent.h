@@ -61,4 +61,6 @@ public:
     
     UPROPERTY(BlueprintReadOnly)
     bool IsReloaded = true;
+    
+    EFiringState GetFiringState() const;
 };
