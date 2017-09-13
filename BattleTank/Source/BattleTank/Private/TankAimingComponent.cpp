@@ -28,9 +28,14 @@ void UTankAimingComponent::BeginPlay()
     LastFireTime = FPlatformTime::Seconds();
 }
 
+int32 UTankAimingComponent::GetAmmoCount() const
+{
+    return AmmoCount;
+}
+
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
-    if(AmmoCount == 0)
+    if(GetAmmoCount() == 0)
     {
         FiringState = EFiringState::OutOfAmmo;
     } else if((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)

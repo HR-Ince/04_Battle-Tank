@@ -29,8 +29,6 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 protected:
     UPROPERTY(BlueprintReadOnly, Category = "State")
     EFiringState FiringState = EFiringState::Locked;
-    UPROPERTY(BlueprintReadOnly, Category = "Firing")
-    int AmmoCount = 3;
 
 private:
     // Sets default values for this component's properties
@@ -56,11 +54,15 @@ private:
     
 public:
     void AimAt(FVector HitLocation);
+    EFiringState GetFiringState() const;
     
-    UFUNCTION(BlueprintCallable, Category = "Action")
+    UFUNCTION(BlueprintCallable, Category = "Firing")
     void Fire();
     UFUNCTION(BlueprintCallable, Category = "Setup")
     void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
-    
-    EFiringState GetFiringState() const;
+    UFUNCTION(BlueprintCallable, Category = "Firing")
+    int32 GetAmmoCount() const;
+
+    UPROPERTY(EditDefaultsOnly, Category = "Firing")
+    int32 AmmoCount = 3;
 };
