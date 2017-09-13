@@ -12,14 +12,15 @@ enum class EFiringState : uint8
 {
     Aiming,
     Locked,
-    Reloading
+    Reloading,
+    OutOfAmmo
 };
 
 class UTankBarrel;
 class UTankTurret;
 class AProjectile;
 
-// Holds barrel's properties
+// Holds methods for aiming and firing
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
@@ -28,6 +29,8 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 protected:
     UPROPERTY(BlueprintReadOnly, Category = "State")
     EFiringState FiringState = EFiringState::Locked;
+    UPROPERTY(BlueprintReadOnly, Category = "Firing")
+    int AmmoCount = 3;
 
 private:
     // Sets default values for this component's properties
@@ -58,9 +61,6 @@ public:
     void Fire();
     UFUNCTION(BlueprintCallable, Category = "Setup")
     void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
-    
-    UPROPERTY(BlueprintReadOnly)
-    bool IsReloaded = true;
     
     EFiringState GetFiringState() const;
 };
