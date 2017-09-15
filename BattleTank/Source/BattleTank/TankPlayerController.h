@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "Tank.h"
 #include "TankPlayerController.generated.h"
 
 class UTankAimingComponent;
@@ -21,6 +22,7 @@ protected:
     void FoundAimingComponent(UTankAimingComponent* AimComp);
     
 private:
+    virtual void SetPawn(APawn* InPawn) override;
     void AimTowardsCrosshair();
     bool GetSightRayHitLocation(FVector& OutHitLocation) const;
     bool GetLookDirection(FVector2D, FVector&) const;
@@ -28,6 +30,8 @@ private:
     FVector GetWidgetLocation();
     FVector GetRange();
 	
+    UFUNCTION()
+    void OnPossessedTankDeath();
     UPROPERTY(EditAnywhere)
     float CrosshairXLocation = 0.5;
     UPROPERTY(EditAnywhere)

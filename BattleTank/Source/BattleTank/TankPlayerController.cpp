@@ -12,6 +12,24 @@ void ATankPlayerController::BeginPlay()
     FoundAimingComponent(AimingComponent);
 }
 
+void ATankPlayerController::SetPawn(APawn* InPawn)
+{
+    Super::SetPawn(InPawn);
+    
+    if(InPawn)
+    {
+        auto PossessedTank = Cast<ATank>(InPawn);
+        if(!ensure(PossessedTank)) { return; }
+        
+        PossessedTank->OnTankDeath.AddUniqueDynamic(this, &ATankPlayerController::OnPossessedTankDeath);
+    }
+}
+
+void ATankPlayerController::OnPossessedTankDeath()
+{
+    UE_LOG(LogTemp, Warning, TEXT("You have been murdered!"))
+}
+
 void ATankPlayerController::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);

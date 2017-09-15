@@ -18,6 +18,12 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category = "Setup")
     float AcceptanceRadius = 4000;
 	
+private:
+    virtual void SetPawn(APawn* InPawn) override;
+    
+    UFUNCTION()
+    void OnPossessedTankDeath();
+    
 public:
     virtual void BeginPlay() override;
     virtual void Tick(float DeltaTime) override;
