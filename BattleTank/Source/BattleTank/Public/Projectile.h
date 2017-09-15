@@ -41,11 +41,15 @@ private:
     void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
     void OnTimerExpire();
     
+    UPROPERTY(EditDefaultsOnly, Category = "Setup")
+    float DestroyDelay = 10;
+    UPROPERTY(EditDefaultsOnly, Category = "Firing")
+    float ProjectileDamage = 20;
+    
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
     void LaunchProjectile(float Speed);
 	
-    UPROPERTY(EditDefaultsOnly, Category = "Setup")
-    float DestroyDelay = 10;
+    
 };
