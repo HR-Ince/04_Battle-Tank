@@ -5,10 +5,11 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Classes/Particles/ParticleSystemComponent.h"
+#include "Classes/PhysicsEngine/RadialForceComponent.h"
 #include "Projectile.generated.h"
 
 class UProjectileMovementComponent;
-class UParticleSystemComponent;
+class URadialForceComponent;
 class UStaticMeshComponent;
 
 UCLASS()
@@ -25,12 +26,20 @@ protected:
 	virtual void BeginPlay() override;
     
     UPROPERTY(VisibleAnywhere, Category = "Components")
+    UStaticMeshComponent* CollisionMesh = nullptr;
+    UPROPERTY(VisibleAnywhere, Category = "Components")
     UParticleSystemComponent* LaunchBlast = nullptr;
     UPROPERTY(VisibleAnywhere, Category = "Components")
-    UStaticMeshComponent* CollisionMesh = nullptr;
+    UParticleSystemComponent* ImpactBlast = nullptr;
+    UPROPERTY(VisibleAnywhere, Category = "Components")
+    URadialForceComponent* ExplosiveForce = nullptr;
     
     UProjectileMovementComponent* ProjectileMovementComponent = nullptr;
 
+private:
+    UFUNCTION()
+    void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+    
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

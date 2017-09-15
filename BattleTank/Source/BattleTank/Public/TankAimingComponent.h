@@ -28,7 +28,7 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 
 protected:
     UPROPERTY(BlueprintReadOnly, Category = "State")
-    EFiringState FiringState = EFiringState::Locked;
+    EFiringState FiringState = EFiringState::Aiming;
 
 private:
     // Sets default values for this component's properties
