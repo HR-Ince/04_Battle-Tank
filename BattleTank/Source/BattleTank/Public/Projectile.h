@@ -39,10 +39,13 @@ protected:
 private:
     UFUNCTION()
     void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+    void OnTimerExpire();
     
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
     void LaunchProjectile(float Speed);
 	
+    UPROPERTY(EditDefaultsOnly, Category = "Setup")
+    float DestroyDelay = 10;
 };
