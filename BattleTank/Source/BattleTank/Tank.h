@@ -22,11 +22,12 @@ public:
     float GetHealthPercent() const;
     
 private:
+    virtual void BeginPlay() override;
     virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser) override;
     
     UPROPERTY(EditDefaultsOnly, Category = "Setup")
     int32 StartingHealth = 200;
     
     UPROPERTY(VisibleAnywhere, Category = "Health")
-    int32 CurrentHealth = StartingHealth;
+    int32 CurrentHealth;
 };

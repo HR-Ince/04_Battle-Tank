@@ -27,7 +27,7 @@ void ATankPlayerController::SetPawn(APawn* InPawn)
 
 void ATankPlayerController::OnPossessedTankDeath()
 {
-    UE_LOG(LogTemp, Warning, TEXT("You have been murdered!"))
+    StartSpectatingOnly();
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -79,7 +79,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
                          Hit,
                          StartLocation,
                          EndLocation,
-                         ECollisionChannel::ECC_Visibility) )
+                         ECollisionChannel::ECC_Camera) )
     {
         HitLocation = Hit.Location;
         return true;
